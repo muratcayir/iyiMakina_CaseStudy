@@ -1,12 +1,8 @@
 const express = require("express")
 const mongoose = require('mongoose')
 const socket = require("socket.io")
-const swaggerJsDoc = require("swagger-jsdoc")
-const swaggerUI = require("swagger-ui-express")
 const cors = require('cors')
-const morgan = require("morgan")
 const dotenv = require("dotenv")
-const bodyParser = require("body-parser");
 const pageRoute = require("./routes/pageRoute")
 const offerRoute = require("./routes/offerRoute")
 const productRoute = require("./routes/productRoute")
@@ -14,6 +10,7 @@ const productRoute = require("./routes/productRoute")
 
 
 const app = express();
+dotenv.config();
 
 
 // -- --------CONNECT DB------------
@@ -27,11 +24,8 @@ mongoose.connect('mongodb://localhost/caseStudy-db', {
   console.log('DB Connected Successfully');
 });
 
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({credentials: true, origin: true}));
 app.use(express.static("public"));
-
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -46,8 +40,8 @@ app.use('/offers', offerRoute);
 
 
 
-
 const server = app.listen(3000);
+
 
 const io = socket(server)
 
@@ -76,37 +70,8 @@ io.on('connection',(socket)=>{
 //-----------------SWAGGER-----------------------------
 
 
-app.use(cors({credentials: true, origin: true}));
-
-dotenv.config();
-app.use(morgan("dev"));
-app.use(cors());
 
 
-const options = {
-  definition: {
-    openapi: "3.1.0",
-    info: {
-      title: "Library API",
-      version: "3.0.0",
-      description: "A simple Express Library API",
-      termsOfService: "http://example.com/terms/",
-      contact: {
-        name: "API Support",
-        url: "http://www.exmaple.com/support",
-        email: "support@example.com",
-      },
-    },
 
-    servers: [
-      {
-        url: "http://localhost:3000",
-        description: "My API Documentation",
-      },
-    ],
-  },
-  apis: ["./Routes/*.js"],
-};
 
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
-const specs = swaggerJsDoc(options);
+

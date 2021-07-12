@@ -10,7 +10,7 @@ const OfferSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
   },
-  product: {
+  userId: {
     type: String,
     required: true,
   },
