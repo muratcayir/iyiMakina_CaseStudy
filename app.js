@@ -14,7 +14,7 @@ dotenv.config();
 
 
 // -- --------CONNECT DB------------
-mongoose.connect('mongodb://localhost/caseStudy-db', {
+mongoose.connect('mongodb+srv://muratcayir:nhhEsuCn4n8LqrOl@cluster0.8uwcr.mongodb.net/caseStudty?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
