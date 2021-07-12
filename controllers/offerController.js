@@ -68,7 +68,7 @@ exports.createOffer = async (req, res) => {
     res.status(404).json({message :"Product not found" });
   }
 
-  offerBody = {
+  const offerBody = {
     price,
     userId,
     product:productId,
