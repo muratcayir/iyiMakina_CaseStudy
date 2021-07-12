@@ -40,9 +40,8 @@ app.use('/offers', offerRoute);
 
 
 
-const server = process.env.PORT  
+const server = process.env.PORT || app.listen(3000);;
 
-app.listen(3000)
 
 const io = socket(server)
 
