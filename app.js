@@ -39,8 +39,8 @@ app.use('/products', productRoute);
 app.use('/offers', offerRoute);
 
 
-
-const server = process.env.PORT || app.listen(3000);;
+const port = process.env.PORT || 3000;
+const server = app.listen(port);
 
 
 const io = socket(server)
