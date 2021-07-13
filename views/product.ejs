@@ -20,6 +20,7 @@
       integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
       crossorigin="anonymous"
     />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <div class="container mt-4">
@@ -52,17 +53,11 @@
                 <h2>Teklif ekranı</h2>
 
                 <div id="chat-window">
-                  <div id="output"></div>
+                  <div id="output" ></div>
                   <div id="feedback"></div>
                 </div>
                
-                <input
-                  type="number"
-                  id="price"
-                  name="price"
-                  placeholder="Teklifinizi Giriniz... "
-                  required
-                />
+                <input type="number" id="price"   name="price" placeholder="Teklifinizi Giriniz... "  required />
 
                 <button id="submitBtn">Gonder</button>
 
@@ -72,23 +67,29 @@
       </div>
     </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+   <p id="sonuc"></p>
+
+  
 <script>
+
+
+
   var socket = io();
    $(() => {
 
     const productId = "<%= product._id %>"
 
     socket.emit("joinRoom", productId);//her ürün için ayrı bir teklif kanalına katılınır
-       $("#submitBtn").click(()=>{
+      
+    $("#submitBtn").click(()=>{
         
         //Teklif socket'e gönderiliyor
         socket.emit("offerRoom", {
           price: price.value,
           userId: socket.id,
-          product: productId,
-        });
-
+          product: productId, })
+       
+       
         //Teklif veritabanına gönderiliyor
            sendOffer(
              {
@@ -96,6 +97,11 @@
               userId: socket.id,
               productId: productId,
             });
+
+          // var enBuyuk = price.forEach(function(index){
+          //  return Math.max.apply(Math, enBuyuk);
+          // })
+          // console.log(enBuyuk)
        })
        getOffersOfProduct(productId)
    })
@@ -111,17 +117,26 @@
 
    function addOffer(data){
        $("#output").append(`<p><strong> ${data.userId}  : </strong> ${data.price } TL </p>`)
+       
+      
    }
 
    function getOffersOfProduct(productId){
      $.get('http://localhost:3000/offers/'+productId, (data) => {
        data.forEach(addOffer);
-     })
+       data.forEach(function(value,index,array){
+        console.log(array[4].price)
+       })
+
+       }) 
    }
 
    function sendOffer(offer){
      $.post('http://localhost:3000/offers', offer)
    }
+
 </script>
+
+
   </body>
 </html>
