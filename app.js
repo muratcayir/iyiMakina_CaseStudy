@@ -12,9 +12,11 @@ const productRoute = require("./routes/productRoute")
 const app = express();
 dotenv.config();
 
+const swaggerUi = require("swagger-ui-express"),
+     swaggerDocument = require("./swagger.json");
 
 // -- --------CONNECT DB------------
-mongoose.connect('mongodb+srv://muratcayir:nhhEsuCn4n8LqrOl@cluster0.8uwcr.mongodb.net/caseStudty?retryWrites=true&w=majority', {
+mongoose.connect('mongodb://localhost/caseStudy-db5', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -38,9 +40,13 @@ app.use("/",pageRoute)
 app.use('/products', productRoute);
 app.use('/offers', offerRoute);
 
+app.use(
+  '/api-docs',
+  swaggerUi.serve, 
+  swaggerUi.setup(swaggerDocument)
+);
 
-const port = process.env.PORT || 3000;
-const server = app.listen(port);
+const server = app.listen(3000);
 
 
 const io = socket(server)

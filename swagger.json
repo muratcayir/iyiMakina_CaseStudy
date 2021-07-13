@@ -1,0 +1,230 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "My User Project CRUD",
+    "description": "My User Project Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Product",
+      "description": "API for users in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+
+
+  "paths": {
+    "/products": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Create a new product in system",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "body",
+            "description": "product detail",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/offers": {
+      "post": {
+        "tags": [
+          "Offer"
+        ],
+        "summary": "Create a new offer in system",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "model",
+            "in": "body",
+            "description": "product detail",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Offer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Offer"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+
+    "/": {
+      "get": {
+          "tags": [
+            "Product"
+          ],
+          "summary": "Get all products in system",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Product"
+              }
+            },
+            "400": {
+              "description": "Failed. Bad post data."
+            }
+          }
+          
+        }
+        
+    },
+    "/offers/{productId}": {
+      "get": {
+          "tags": [
+            "Offer"
+          ],
+          "summary": "Get all products in system",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Offer"
+              }
+            },
+            "400": {
+              "description": "Failed. Bad post data."
+            }
+          }
+          
+        }
+        
+    },
+    "/products/{slug}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get product list by paging",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "description": "Page number of person list",
+            "type": "string"
+          },
+          {
+            "name": "count",
+            "in": "path",
+            "required": true,
+            "description": "Get total User count per page",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "404": {
+            "description": "Failed. Cat not found."
+          }
+        }
+      }}
+},
+"definitions": {
+  "Product": {
+    "required": [
+      "offerStartPrice",
+      "description",
+      "name",
+      "expiredAt"
+    ],
+    "properties": {
+      "description": {
+        "type": "string",
+        "uniqueItems": true
+      },
+      "offerStartPrice": {
+        "type": "string",
+        "uniqueItems": true   
+      },
+      "name": {
+        "type": "string",
+        "uniqueItems": true 
+      },
+     " createdAt": {
+        "type": "string",
+        "default": "date.now"
+      },
+      "expiredAt": {
+        "type": "string"   
+      }    
+  }
+ 
+},
+"Offer": {
+  "required": [
+    "price",
+    "userId"  
+  ],
+  "properties": {
+    "price": {
+      "type": "string"
+      
+    },
+    "userId": {
+      "type": "string"
+  
+    }   
+}
+
+}
+
+}
+
+
+}
+
+  
